@@ -16,26 +16,19 @@
 package org.thebends.synth;
 
 /**
- * An immutable parameter that always returns the same fixed value.  This is
- * mostly used for testing other components with a simple parameter.  New
- * instances are obtained from the static {@link #get(double)} method.
+ * Interface for a filter based on some cutoff frequency (usually high or low
+ * pass).  The input value is a sample and the output value is a new sample
+ * at that time.
  */
-public final class FixedParameter implements Parameter {
-    private final double mValue;
+public abstract class Filter {
+    protected static final float kE = 2.71828183f;
+    protected Parameter mCutoff;
 
-    public FixedParameter(double value) {
-        this.mValue = value;
+    // The cutoff frequency of the filter.
+    public void setCutoff(Parameter cutoff) {
+        mCutoff = cutoff;
     }
 
-    /**
-     * @return a Parameter that always returns the specified value.
-     */
-    public static Parameter get(double value) {
-        return new FixedParameter(value);
-    }
-
-    @Override
-    public double getValue() {
-        return mValue;
-    }
+    public abstract double getValue(double x);
 }
+
