@@ -24,6 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.indigo_lab.android.opensynth.tests.JavaImp"
+            android:label="JavaImp"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="indigo_lab.intent.action.TEST" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
