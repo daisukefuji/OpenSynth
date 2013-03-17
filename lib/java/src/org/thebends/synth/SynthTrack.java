@@ -1,4 +1,4 @@
-package org.thebends.mobilesynth;
+package org.thebends.synth;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
