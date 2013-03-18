@@ -1,11 +1,11 @@
 // modualtion.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/modulation.h"
+#include "modulation.h"
 #include <assert.h>
 #include <stddef.h>
 #include <sys/param.h>
-#include "synth/oscillator.h"
+#include "oscillator.h"
 
 namespace synth {
 

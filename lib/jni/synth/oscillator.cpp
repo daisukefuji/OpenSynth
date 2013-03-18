@@ -1,17 +1,18 @@
 // oscillator.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/oscillator.h"
+#include "oscillator.h"
 #include <assert.h>
 #include <math.h>
-#include "synth/parameter.h"
+#include "parameter.h"
+#include "config.h"
 
 namespace synth {
 
 Oscillator::Oscillator()
     : wave_type_(SINE),
       frequency_(NULL),
-      sample_rate_(kDefaultSampleRate),
+      sample_rate_(Config::kSampleRate),
       sample_num_(0) { }
 
 Oscillator::~Oscillator() { }

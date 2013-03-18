@@ -1,7 +1,7 @@
 // synth.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/envelope.h"
+#include "envelope.h"
 
 //#include <algorithm>
 //#include <cmath>

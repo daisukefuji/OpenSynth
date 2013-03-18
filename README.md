@@ -9,4 +9,5 @@ This project is based on [mobilesynth][]. Thanks a lot Allen!
 
 
 How to launch test activity
-am start -a indigo_lab.intent.action.TEST -n com.indigo_lab.android.opensynth/com.indigo_lab.android.opensynth.tests.JavaImp
+* am start -a indigo_lab.intent.action.TEST -n com.indigo_lab.android.opensynth/com.indigo_lab.android.opensynth.tests.JavaImp
+* am start -a indigo_lab.intent.action.TEST -n com.indigo_lab.android.opensynth/com.indigo_lab.android.opensynth.tests.NativeImp

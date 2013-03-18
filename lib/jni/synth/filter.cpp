@@ -1,13 +1,13 @@
 // filter.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/filter.h"
+#include "filter.h"
+#include "config.h"
 #include <math.h>
 #include <stddef.h>
 
 namespace synth {
 
-static const float kSampleRate = 44100.0f;
 static const float kE = 2.71828183f;
 
 Filter::Filter() { }
@@ -31,7 +31,7 @@ void LowPassFilter::reset(float frequency) {
   float f0 = frequency;
 
   // Sample frequency
-  const float fs = 44100.0f;
+  const float fs = Config::kSampleRate;
 
   // 3dB cutoff correction
   float c = powf(powf(2, 1.0f / n) - 1, -0.25);
@@ -108,7 +108,7 @@ float ResonantFilter::GetValue(float x) {
     return x;
   }
   float cutoff = cutoff_->GetValue();
-  float f = 2.0f * cutoff / kSampleRate;
+  float f = 2.0f * cutoff / Config::kSampleRate;
   float k = 3.6f * f - 1.6f * f * f - 1;
   float p = (k + 1.0f) * 0.5f;
   float scale = powf(kE, (1.0f - p) * 1.386249);

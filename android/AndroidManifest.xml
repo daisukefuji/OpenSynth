@@ -32,6 +32,14 @@
                 <action android:name="indigo_lab.intent.action.TEST" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.indigo_lab.android.opensynth.tests.NativeImp"
+            android:label="NativeImp"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="indigo_lab.intent.action.TEST" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

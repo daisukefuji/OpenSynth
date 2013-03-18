@@ -6,14 +6,14 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
 
-#include "synth/arpeggio.h"
-#include "synth/envelope.h"
-#include "synth/filter.h"
-#include "synth/lag_processor.h"
-#include "synth/modulation.h"
-#include "synth/oscillator.h"
-#include "synth/parameter.h"
-#include "synth/key_stack.h"
+#include "arpeggio.h"
+#include "envelope.h"
+#include "filter.h"
+#include "lag_processor.h"
+#include "modulation.h"
+#include "oscillator.h"
+#include "parameter.h"
+#include "key_stack.h"
 
 namespace synth {
 
@@ -127,6 +127,7 @@ class Controller {
   float GetSample();
 
   void GetFloatSamples(float* buffer, int size);
+  void GetShortSamples(short* buffer, int size);
   
  private:
   // Invoked when one of the routing parameters changes, such as the source

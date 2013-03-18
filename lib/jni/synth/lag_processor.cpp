@@ -1,7 +1,7 @@
 // lag_processor.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/lag_processor.h"
+#include "lag_processor.h"
 
 #include <math.h>
 

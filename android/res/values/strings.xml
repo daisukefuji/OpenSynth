@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">OpenSynth</string>
+    <string name="make_a_sound">make a sound</string>
 
 </resources>

@@ -6,8 +6,8 @@
 #ifndef __FILTER_H__
 #define __FILTER_H__
 
-#include "synth/parameter.h"
-#include "synth/envelope.h"
+#include "parameter.h"
+#include "envelope.h"
 
 namespace synth {
 

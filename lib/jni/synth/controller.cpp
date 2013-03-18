@@ -1,14 +1,14 @@
 // controller.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/controller.h"
+#include "controller.h"
 
 #include <math.h>
 #include <assert.h>
-#include "synth/envelope.h"
-#include "synth/filter.h"
-#include "synth/modulation.h"
-#include "synth/oscillator.h"
+#include "envelope.h"
+#include "filter.h"
+#include "modulation.h"
+#include "oscillator.h"
 
 namespace synth {
   
@@ -208,6 +208,12 @@ void Controller::set_filter_resonance(float value) {
   resonant_filter_.set_resonance(value);
 }
 
+void Controller::GetShortSamples(short* buffer, int size) {
+  for (int i = 0; i < size; ++i) {
+    buffer[i] = GetSample() * 32767;
+  }
+}
+
 void Controller::GetFloatSamples(float* buffer, int size) {
   for (int i = 0; i < size; ++i) {
     buffer[i] = GetSample();
@@ -227,6 +233,9 @@ float Controller::GetSample() {
   // Combined filter with envelope/modulation
   value = lowpass_filter_.GetValue(value);
   value = resonant_filter_.GetValue(value);
+  if (isnan(value)) {
+    return 0;
+  }
   // Clip!
   value = fmaxf(-1.0f, value);
   value = fminf(1.0f, value);

@@ -1,7 +1,7 @@
 // parameter.cpp
 // Author: Allen Porter <allen@thebends.org>
 
-#include "synth/parameter.h"
+#include "parameter.h"
 #include <math.h>
 
 namespace synth {

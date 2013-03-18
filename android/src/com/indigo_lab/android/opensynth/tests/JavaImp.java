@@ -39,9 +39,9 @@ public class JavaImp extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_javaimp);
+        setContentView(R.layout.activity_tests);
 
-        View v = findViewById(R.id.javaimp_layout);
+        View v = findViewById(R.id.make_a_sound_button);
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

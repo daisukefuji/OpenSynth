@@ -3,7 +3,7 @@
 //
 // TODO
 
-#include "synth/parameter.h"
+#include "parameter.h"
 
 namespace synth {
 

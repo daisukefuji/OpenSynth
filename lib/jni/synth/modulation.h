@@ -4,7 +4,7 @@
 #ifndef __MODULATION_H__
 #define __MODULATION_H__
 
-#include "synth/parameter.h"
+#include "parameter.h"
 
 namespace synth {
 

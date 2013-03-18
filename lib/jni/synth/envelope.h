@@ -6,7 +6,7 @@
 #ifndef __ENVELOPE_H__
 #define __ENVELOPE_H__
 
-#include "synth/parameter.h"
+#include "parameter.h"
 
 namespace synth {
 

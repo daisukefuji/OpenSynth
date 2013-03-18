@@ -3,8 +3,8 @@
 //
 // A lag processor, used to implement glide.
 
-#include "synth/parameter.h"
-#include "synth/envelope.h"
+#include "parameter.h"
+#include "envelope.h"
 
 #ifndef __LAG_PROCESSOR_H__
 #define __LAG_PROCESSOR_H__
