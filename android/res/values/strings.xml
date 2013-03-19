@@ -4,4 +4,48 @@
     <string name="app_name">OpenSynth</string>
     <string name="make_a_sound">make a sound</string>
 
+    <string name="glide_rate">GLIDE RATE</string>
+    <string name="one">1\'</string>
+    <string name="two">2\'</string>
+    <string name="four">4\'</string>
+    <string name="eight">8\'</string>
+    <string name="sixteen">16\'</string>
+    <string name="osc">OSC</string>
+
+    <string name="osc2_freq_fine_tune">OSC2 FREQ FINE TUNE</string>
+    <string name="semis">SEMIS</string>
+    <string name="cents">CENTS</string>
+    <string name="sync_1_2">1 &#8211; 2 SYNC</string>
+
+    <string name="modulation">MODULATION</string>
+    <string name="lfo_rate">LFO RATE</string>
+    <string name="amount">AMOUNT</string>
+    <string name="filter">FILTER</string>
+    <string name="pitch">PITCH</string>
+    <string name="wave">WAVE</string>
+
+    <string name="volume_envelope_generator">VOLUME ENVELOPE GENERATOR</string>
+    <string name="attack">attack</string>
+    <string name="decay">decay</string>
+    <string name="sustain">sustain</string>
+    <string name="release">release</string>
+
+    <string name="cutoff">CUTOFF</string>
+    <string name="hz">hz</string>
+    <string name="resonance">RESONANCE</string>
+    <string name="filter_envelope_generator">FILTER ENVELOPE GENERATOR</string>
+
+    <string name="step_mode">STEP MODE</string>
+    <string name="up">UP</string>
+    <string name="down">DOWN</string>
+    <string name="up_down">UP/DOWN</string>
+    <string name="random">RANDOM</string>
+    <string name="arpeggio">ARPEGGIO</string>
+    <string name="rate">RATE</string>
+    <string name="octaves">OCTAVES</string>
+    <string name="n_one">1</string>
+    <string name="n_two">2</string>
+    <string name="n_three">3</string>
+    <string name="n_four">4</string>
+    <string name="n_five">5</string>
 </resources>

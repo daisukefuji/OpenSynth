@@ -1,0 +1,10 @@
+<resources>
+    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/black</item>
+    </style>
+
+    <style name="RadioButton" parent="@android:style/Widget.Holo.Button.Toggle">
+        <item name="android:button">@null</item>
+    </style>
+</resources>

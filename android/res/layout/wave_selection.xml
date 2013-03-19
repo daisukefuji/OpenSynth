@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <com.indigo_lab.android.opensynth.view.ImageRadioButton
+        android:id="@+id/radio_square_wave"
+        android:layout_width="55dip"
+        android:layout_height="wrap_content"
+        android:src="@drawable/square_wave"
+        style="@style/RadioButton" />
+    <com.indigo_lab.android.opensynth.view.ImageRadioButton
+        android:id="@+id/radio_triangle_wave"
+        android:layout_width="55dip"
+        android:layout_height="wrap_content"
+        android:src="@drawable/triangle_wave"
+        style="@style/RadioButton" />
+    <com.indigo_lab.android.opensynth.view.ImageRadioButton
+        android:id="@+id/radio_sawtooth_wave"
+        android:layout_width="55dip"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sawtooth_wave"
+        style="@style/RadioButton" />
+    <com.indigo_lab.android.opensynth.view.ImageRadioButton
+        android:id="@+id/radio_reverse_sawtooth_wave"
+        android:layout_width="55dip"
+        android:layout_height="wrap_content"
+        android:src="@drawable/reverse_sawtooth_wave"
+        style="@style/RadioButton" />
+</RadioGroup>
