@@ -28,7 +28,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.google.synthesizer.core.midi.MidiListener;
-import com.google.synthesizer.core.model.composite.MultiChannelSynthesizer;
 import com.google.synthesizer.core.music.Note;
 import com.indigo_lab.android.opensynth.R;
 
@@ -351,6 +350,7 @@ public class PianoView extends View {
    * @synth - The synthesizer to connect to.
    * @channel - Which of the synthesizer's channels to bind to.
    */
+  /*
   public void bindTo(final MultiChannelSynthesizer synth, final int channel) {
     this.setPianoViewListener(new PianoViewListener() {
       public void noteDown(double logFrequency, int finger, boolean retriggerIfOn,
@@ -363,6 +363,7 @@ public class PianoView extends View {
       }
     });
   }
+  */
 
   /**
    * Connects the PianoView to an MidiListener.
