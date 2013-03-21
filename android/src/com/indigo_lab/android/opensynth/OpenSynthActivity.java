@@ -17,6 +17,9 @@ package com.indigo_lab.android.opensynth;
 
 import org.thebends.synth.SynthJni;
 
+import com.google.synthesizer.android.widgets.piano.PianoView;
+import com.google.synthesizer.core.midi.MidiListener;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.view.ViewPager;
@@ -24,6 +27,116 @@ import android.support.v4.view.ViewPager;
 public class OpenSynthActivity extends Activity {
     private ViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
+    private PianoView mPianoView;
+
+    private MidiListener mMidiListener = new MidiListener(){
+        @Override
+        public void onNoteOff(int channel, int note, int velocity) {
+            SynthJni.nativeNoteOff(note);
+        }
+
+        @Override
+        public void onNoteOn(int channel, int note, int velocity) {
+            SynthJni.nativeNoteOn(note);
+        }
+
+        @Override
+        public void onNoteAftertouch(int channel, int note, int aftertouch) {
+        }
+
+        @Override
+        public void onController(int channel, int control, int value) {
+        }
+
+        @Override
+        public void onProgramChange(int channel, int program) {
+        }
+
+        @Override
+        public void onChannelAftertouch(int channel, int aftertouch) {
+        }
+
+        @Override
+        public void onPitchBend(int channel, int value) {
+        }
+
+        @Override
+        public void onTimingClock() {
+        }
+
+        @Override
+        public void onActiveSensing() {
+        }
+
+        @Override
+        public void onSequenceNumber(int sequenceNumber) {
+        }
+
+        @Override
+        public void onText(byte[] text) {
+        }
+
+        @Override
+        public void onCopyrightNotice(byte[] text) {
+        }
+
+        @Override
+        public void onSequenceName(byte[] text) {
+        }
+
+        @Override
+        public void onInstrumentName(byte[] text) {
+        }
+
+        @Override
+        public void onLyrics(byte[] text) {
+        }
+
+        @Override
+        public void onMarker(byte[] text) {
+        }
+
+        @Override
+        public void onCuePoint(byte[] text) {
+        }
+
+        @Override
+        public void onChannelPrefix(int channel) {
+        }
+
+        @Override
+        public void onPort(byte[] data) {
+        }
+
+        @Override
+        public void onEndOfTrack() {
+        }
+
+        @Override
+        public void onSetTempo(int microsecondsPerQuarterNote) {
+        }
+
+        @Override
+        public void onSmpteOffset(byte[] data) {
+        }
+
+        @Override
+        public void onTimeSignature(int numerator, int denominator,
+                int metronomePulse, int thirtySecondNotesPerQuarterNote) {
+        }
+
+        @Override
+        public void onKeySignature(int key, boolean isMinor) {
+        }
+
+        @Override
+        public void onSequencerSpecificEvent(byte[] data) {
+        }
+
+        @Override
+        public void onSysEx(byte[] data) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,22 +147,8 @@ public class OpenSynthActivity extends Activity {
         mViewPager = (ViewPager)findViewById(R.id.viewpager);
         mViewPager.setAdapter(mViewPagerAdapter);
 
-        //TODO this code is replaced by keyboard view
-        android.view.View v = findViewById(R.id.keyboard_view);
-        v.setOnTouchListener(new android.view.View.OnTouchListener() {
-            @Override
-            public boolean onTouch(android.view.View v, android.view.MotionEvent event) {
-                switch (event.getAction()) {
-                case android.view.MotionEvent.ACTION_DOWN:
-                    SynthJni.nativeNoteOn(10);
-                    break;
-                case android.view.MotionEvent.ACTION_UP:
-                    SynthJni.nativeNoteOff(10);
-                    break;
-                }
-                return true;
-            }
-        });
+        mPianoView = (PianoView)findViewById(R.id.piano);
+        mPianoView.bindTo(mMidiListener);
     }
 
     @Override
