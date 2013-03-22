@@ -138,7 +138,7 @@ public class OscillatorView extends ControllerView implements OnSeekBarChangeLis
             boolean fromUser) {
         float value = (progress / 100f) * 0.04f;
         long samples = Math.round(SAMPLE_RATE * value);
-        SynthJni.nativeSetGlideSamples(samples);
+        SynthJni.setGlideSamples(samples);
     }
 
     @Override
@@ -151,25 +151,25 @@ public class OscillatorView extends ControllerView implements OnSeekBarChangeLis
    
     private void setOSCLevel(Group group, float level) {
         if (group == mLeft) {
-            SynthJni.nativeSetOSC1Level(level);
+            SynthJni.setOSC1Level(level);
         } else {
-            SynthJni.nativeSetOSC2Level(level);
+            SynthJni.setOSC2Level(level);
         }
     }
 
     private void setOSCWaveType(Group group, int waveType) {
         if (group == mLeft) {
-            SynthJni.nativeSetOSC1WaveType(waveType);
+            SynthJni.setOSC1WaveType(waveType);
         } else {
-            SynthJni.nativeSetOSC2WaveType(waveType);
+            SynthJni.setOSC2WaveType(waveType);
         }
     }
 
     private void setOSCOctave(Group group, int octaveShift) {
         if (group == mLeft) {
-            SynthJni.nativeSetOSC1Octave(octaveShift);
+            SynthJni.setOSC1Octave(octaveShift);
         } else {
-            SynthJni.nativeSetOSC2Octave(octaveShift);
+            SynthJni.setOSC2Octave(octaveShift);
         }
     }
 }

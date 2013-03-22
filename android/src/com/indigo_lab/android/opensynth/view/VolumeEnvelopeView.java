@@ -26,16 +26,16 @@ public class VolumeEnvelopeView extends EnvelopeView {
             boolean fromUser) {
         switch (seekBar.getId()) {
         case R.id.attack_seekbar:
-            SynthJni.nativeSetAttackToVolumeEnvelope(calcSample(progress, 2f));
+            SynthJni.setAttackToVolumeEnvelope(calcSample(progress, 2f));
             break;
         case R.id.decay_seekbar:
-            SynthJni.nativeSetDecayToVolumeEnvelope(calcSample(progress, 2f));
+            SynthJni.setDecayToVolumeEnvelope(calcSample(progress, 2f));
             break;
         case R.id.sustain_seekbar:
-            SynthJni.nativeSetSustainToVolumeEnvelope(progress / 100f);
+            SynthJni.setSustainToVolumeEnvelope(progress / 100f);
             break;
         case R.id.release_seekbar:
-            SynthJni.nativeSetReleaseToVolumeEnvelope(calcSample(progress, 3f));
+            SynthJni.setReleaseToVolumeEnvelope(calcSample(progress, 3f));
             break;
         default:
             throw new RuntimeException("unknown seekbar: " + seekBar.getId());

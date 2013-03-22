@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 public abstract class ControllerView extends FrameLayout {
@@ -15,5 +14,4 @@ public abstract class ControllerView extends FrameLayout {
         //View v = View.inflate(context, resource, this);  
         addView(v);
     }
-
 }

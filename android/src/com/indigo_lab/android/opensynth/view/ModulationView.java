@@ -47,11 +47,11 @@ public class ModulationView extends ControllerView implements OnCheckedChangeLis
         switch (seekBar.getId()) {
         case R.id.lfo_rate_seekbar:
             float frequency = (progress / 100f) * 15f;
-            SynthJni.nativeSetModulationFrequency(frequency);
+            SynthJni.setModulationFrequency(frequency);
             break;
         case R.id.lfo_amount_seekbar:
             float amount = progress / 100f;
-            SynthJni.nativeSetModulationAmount(amount);
+            SynthJni.setModulationAmount(amount);
             break;
         default:
             throw new RuntimeException("unknown seekbar: " + seekBar.getId());
@@ -88,7 +88,7 @@ public class ModulationView extends ControllerView implements OnCheckedChangeLis
             default:
                 throw new RuntimeException("unknown modulation source: " + checkedId);
             }
-            SynthJni.nativeSetModulationSource(source);
+            SynthJni.setModulationSource(source);
             break;
         }
         case R.id.modulation_destination:
@@ -107,7 +107,7 @@ public class ModulationView extends ControllerView implements OnCheckedChangeLis
             default:
                 throw new RuntimeException("unknown modulation destination: " + checkedId);
             }
-            SynthJni.nativeSetModulationDestination(destination);
+            SynthJni.setModulationDestination(destination);
             break;
         }
         default:

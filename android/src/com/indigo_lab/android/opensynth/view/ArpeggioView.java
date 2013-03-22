@@ -43,7 +43,7 @@ public class ArpeggioView extends ControllerView
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        SynthJni.nativeSetArpeggioEnabled(isChecked);
+        SynthJni.setArpeggioEnabled(isChecked);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ArpeggioView extends ControllerView
             default:
                 throw new RuntimeException("unknown octave: " + checkedId);
             }
-            SynthJni.nativeSetArpeggioOctaves(octave);
+            SynthJni.setArpeggioOctaves(octave);
             break;
         }
         case R.id.steps:
@@ -93,7 +93,7 @@ public class ArpeggioView extends ControllerView
             default:
                 throw new RuntimeException("unknown step: " + checkedId);
             }
-            SynthJni.nativeSetArpeggioStep(step);
+            SynthJni.setArpeggioStep(step);
             break;
         }
         default:
@@ -110,7 +110,7 @@ public class ArpeggioView extends ControllerView
             boolean fromUser) {
         float value = progress / 100f;
         int samples = Math.round(value * (kArpeggioMinSamples - kArpeggioMaxSamples) + kArpeggioMaxSamples);
-        SynthJni.nativeSetArpeggioSamples(samples);
+        SynthJni.setArpeggioSamples(samples);
     }
 
     @Override

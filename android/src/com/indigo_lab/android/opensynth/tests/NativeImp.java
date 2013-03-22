@@ -41,10 +41,10 @@ public class NativeImp extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    SynthJni.nativeNoteOn(60);
+                    SynthJni.noteOn(60);
                     break;
                 case MotionEvent.ACTION_UP:
-                    SynthJni.nativeNoteOff(60);
+                    SynthJni.noteOff(60);
                     break;
                 }
                 return true;
@@ -57,7 +57,7 @@ public class NativeImp extends Activity {
         super.onPause();
 
         LOG.info("Pausing synth activity");
-        SynthJni.nativeShutdown();
+        SynthJni.shutdown();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class NativeImp extends Activity {
         super.onResume();
 
         LOG.info("Resuming synth activity");
-        SynthJni.nativeStart();
+        SynthJni.start();
         setControllerSettings();
     }
 
@@ -74,57 +74,57 @@ public class NativeImp extends Activity {
          * Oscillator
          */
         // OSC1
-        SynthJni.nativeSetOSC1Level(0.5f);
-        SynthJni.nativeSetOSC1WaveType(SynthJni.WAVE_TYPE_TRIANGLE);
-        SynthJni.nativeSetOSC1Octave(SynthJni.OCTAVE_SHIFT_1);
+        SynthJni.setOSC1Level(0.5f);
+        SynthJni.setOSC1WaveType(SynthJni.WAVE_TYPE_TRIANGLE);
+        SynthJni.setOSC1Octave(SynthJni.OCTAVE_SHIFT_1);
 
         // 0SC2
-        SynthJni.nativeSetOSC2Level(0.3f);
-        SynthJni.nativeSetOSC2WaveType(SynthJni.WAVE_TYPE_REVERSE_SAWTOOTH);
-        SynthJni.nativeSetOSC2Octave(SynthJni.OCTAVE_SHIFT_2);
+        SynthJni.setOSC2Level(0.3f);
+        SynthJni.setOSC2WaveType(SynthJni.WAVE_TYPE_REVERSE_SAWTOOTH);
+        SynthJni.setOSC2Octave(SynthJni.OCTAVE_SHIFT_2);
 
-        SynthJni.nativeSetGlideSamples(0);
+        SynthJni.setGlideSamples(0);
 
         /**
          * Modulation
          */
-        SynthJni.nativeSetModulationAmount(0.2f);
-        SynthJni.nativeSetModulationFrequency(0.3f);
-        SynthJni.nativeSetModulationSource(SynthJni.MODULATION_SOURCE_LFO_SRC_TRIANGLE);
-        SynthJni.nativeSetModulationDestination(SynthJni.MODULATION_DESTINATION_LFO_DEST_PITCH);
+        SynthJni.setModulationAmount(0.2f);
+        SynthJni.setModulationFrequency(0.3f);
+        SynthJni.setModulationSource(SynthJni.MODULATION_SOURCE_LFO_SRC_TRIANGLE);
+        SynthJni.setModulationDestination(SynthJni.MODULATION_DESTINATION_LFO_DEST_PITCH);
 
         /**
          *  Filter
          */
-        SynthJni.nativeSetFilterCutoff(10000);
-        SynthJni.nativeSetFilterResonance(0);
+        SynthJni.setFilterCutoff(10000);
+        SynthJni.setFilterResonance(0);
 
         /**
          * Volume envelope
          */
-        SynthJni.nativeSetAttackToVolumeEnvelope(0);
-        SynthJni.nativeSetDecayToVolumeEnvelope(0);
-        SynthJni.nativeSetSustainToVolumeEnvelope(1);
-        SynthJni.nativeSetReleaseToVolumeEnvelope(1);
+        SynthJni.setAttackToVolumeEnvelope(0);
+        SynthJni.setDecayToVolumeEnvelope(0);
+        SynthJni.setSustainToVolumeEnvelope(1);
+        SynthJni.setReleaseToVolumeEnvelope(1);
 
         /**
          * Filter envelope
          */
-        SynthJni.nativeSetAttackToFilterEnvelope(0);
-        SynthJni.nativeSetDecayToFilterEnvelope(0);
-        SynthJni.nativeSetSustainToFilterEnvelope(1);
-        SynthJni.nativeSetReleaseToFilterEnvelope(1);
+        SynthJni.setAttackToFilterEnvelope(0);
+        SynthJni.setDecayToFilterEnvelope(0);
+        SynthJni.setSustainToFilterEnvelope(1);
+        SynthJni.setReleaseToFilterEnvelope(1);
 
         /**
          * Arpeggio
          */
-        SynthJni.nativeSetArpeggioEnabled(false);
-        SynthJni.nativeSetArpeggioOctaves(3);
+        SynthJni.setArpeggioEnabled(false);
+        SynthJni.setArpeggioOctaves(3);
         final float value = 0.5f;
         final int kArpeggioMaxSamples = SynthJni.SAMPLE_RATE_HZ;  // 1 second
         final int kArpeggioMinSamples = (int)(SynthJni.SAMPLE_RATE_HZ / 8.);  // 0.125 seconds
         final int arpeggioSamples = (int)(value * (kArpeggioMinSamples - kArpeggioMaxSamples) + kArpeggioMaxSamples);
-        SynthJni.nativeSetArpeggioSamples(arpeggioSamples);
-        SynthJni.nativeSetArpeggioStep(SynthJni.STEP_UP_DOWN);
+        SynthJni.setArpeggioSamples(arpeggioSamples);
+        SynthJni.setArpeggioStep(SynthJni.STEP_UP_DOWN);
     }
 }

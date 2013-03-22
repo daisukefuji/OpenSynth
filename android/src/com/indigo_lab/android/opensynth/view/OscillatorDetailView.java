@@ -81,11 +81,11 @@ public class OscillatorDetailView extends ControllerView implements OnSeekBarCha
         mCentsText.setText(Integer.toString(osc2Cents));
         int total = osc2Cents + 100 * osc2Semitones;
         mTotalText.setText(Integer.toString(total));
-        SynthJni.nativeSetOsc2Shift(total);
+        SynthJni.setOsc2Shift(total);
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        SynthJni.nativeSetOscSync(isChecked);
+        SynthJni.setOscSync(isChecked);
     }
 }

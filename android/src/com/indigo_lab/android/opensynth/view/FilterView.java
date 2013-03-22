@@ -49,11 +49,11 @@ public class FilterView extends ControllerView implements OnSeekBarChangeListene
             float cutoff = ((progress / 100f) * delta) + min;
             String text = String.format("%dHz",  Math.round(cutoff));
             mCutoffText.setText(text);
-            SynthJni.nativeSetFilterCutoff(cutoff);
+            SynthJni.setFilterCutoff(cutoff);
             break;
         case R.id.resonance_seekbar:
             float value = (progress / 100f) * 0.85f;
-            SynthJni.nativeSetFilterResonance(value);
+            SynthJni.setFilterResonance(value);
             break;
         default:
             throw new RuntimeException("unknown seekbar: " + seekBar.getId());
