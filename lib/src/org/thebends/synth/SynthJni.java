@@ -15,6 +15,8 @@
  */
 package org.thebends.synth;
 
+import android.content.SharedPreferences;
+
 public class SynthJni {
     /**
      * Loads the 'synth' library on application startup.  The library has already
@@ -121,6 +123,66 @@ public class SynthJni {
     private static int sArpeggioOctaves;
     private static int sArpeggioSamples;
     private static int sArpeggioStep;
+
+    public static void restoreSettings(SharedPreferences state) {
+        setOSC1Level(state.getFloat("sOSC1Level", 0.5f));
+        setOSC1WaveType(state.getInt("sOSC1WaveType", WAVE_TYPE_SQUARE));
+        setOSC1Octave(state.getInt("sOSC1Octave", OCTAVE_SHIFT_1));
+        setOSC2Level(state.getFloat("sOSC2Level", 0.5f));
+        setOSC2WaveType(state.getInt("sOSC2WaveType", WAVE_TYPE_SQUARE));
+        setOSC2Octave(state.getInt("sOSC2Octave", OCTAVE_SHIFT_1));
+        setGlideSamples(state.getLong("sGlideSamples", 0));
+        setOsc2Shift(state.getInt("sOsc2Shift", 0));
+        setOscSync(state.getBoolean("sOscSync", false));
+        setModulationAmount(state.getFloat("sModulationAmount", 0));
+        setModulationFrequency(state.getFloat("sModulationFrequency", 0));
+        setModulationSource(state.getInt("sModulationSource", MODULATION_SOURCE_LFO_SRC_SQUARE));
+        setModulationDestination(state.getInt("sModulationDestination", MODULATION_DESTINATION_LFO_DEST_WAVE));
+        setFilterCutoff(state.getFloat("sFilterCutoff", -1f));
+        setFilterResonance(state.getFloat("sFilterResonance", 0));
+        setAttackToVolumeEnvelope(state.getLong("sAttackToVolumeEnvelope", 0));
+        setDecayToVolumeEnvelope(state.getLong("sDecayToVolumeEnvelope", 0));
+        setSustainToVolumeEnvelope(state.getFloat("sSustainToVolumeEnvelope", 1f));
+        setReleaseToVolumeEnvelope(state.getLong("sReleaseToVolumeEnvelope", 0));
+        setAttackToFilterEnvelope(state.getLong("sAttackToFilterEnvelope", 0));
+        setDecayToFilterEnvelope(state.getLong("sDecayToFilterEnvelope", 0));
+        setSustainToFilterEnvelope(state.getFloat("sSustainToFilterEnvelope", 1f));
+        setReleaseToFilterEnvelope(state.getLong("sReleaseToFilterEnvelope", 0));
+        setArpeggioEnabled(state.getBoolean("sArpeggioEnabled", false));
+        setArpeggioOctaves(state.getInt("sArpeggioOctaves", 1));
+        setArpeggioSamples(state.getInt("sArpeggioSamples", SAMPLE_RATE_HZ));
+        setArpeggioStep(state.getInt("sArpeggioStep", STEP_UP));
+    }
+
+    public static void saveSettings(SharedPreferences.Editor state) {
+        state.putFloat("sOSC1Level", sOSC1Level);
+        state.putInt("sOSC1WaveType", sOSC1WaveType);
+        state.putInt("sOSC1Octave", sOSC1Octave);
+        state.putFloat("sOSC2Level", sOSC2Level);
+        state.putInt("sOSC2WaveType", sOSC2WaveType);
+        state.putInt("sOSC2Octave", sOSC2Octave);
+        state.putLong("sGlideSamples", sGlideSamples);
+        state.putInt("sOsc2Shift", sOsc2Shift);
+        state.putBoolean("sOscSync", sOscSync);
+        state.putFloat("sModulationAmount", sModulationAmount);
+        state.putFloat("sModulationFrequency", sModulationFrequency);
+        state.putInt("sModulationSource", sModulationSource);
+        state.putInt("sModulationDestination", sModulationDestination);
+        state.putFloat("sFilterCutoff", sFilterCutoff);
+        state.putFloat("sFilterResonance", sFilterResonance);
+        state.putLong("sAttackToVolumeEnvelope", sAttackToVolumeEnvelope);
+        state.putLong("sDecayToVolumeEnvelope", sDecayToVolumeEnvelope);
+        state.putFloat("sSustainToVolumeEnvelope", sSustainToVolumeEnvelope);
+        state.putLong("sReleaseToVolumeEnvelope", sReleaseToVolumeEnvelope);
+        state.putLong("sAttackToFilterEnvelope", sAttackToFilterEnvelope);
+        state.putLong("sDecayToFilterEnvelope", sDecayToFilterEnvelope);
+        state.putFloat("sSustainToFilterEnvelope", sSustainToFilterEnvelope);
+        state.putLong("sReleaseToFilterEnvelope", sReleaseToFilterEnvelope);
+        state.putBoolean("sArpeggioEnabled", sArpeggioEnabled);
+        state.putInt("sArpeggioOctaves", sArpeggioOctaves);
+        state.putInt("sArpeggioSamples", sArpeggioSamples);
+        state.putInt("sArpeggioStep", sArpeggioStep);
+    }
 
     public static int start() {
         return nativeStart();

@@ -22,6 +22,8 @@ import com.google.synthesizer.core.midi.MidiListener;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 
 public class OpenSynthActivity extends Activity {
@@ -156,73 +158,17 @@ public class OpenSynthActivity extends Activity {
         super.onResume();
 
         SynthJni.start();
-        setControllerSettings();
+        SynthJni.restoreSettings(getPreferences(Context.MODE_PRIVATE));
     }
 
     @Override
     protected void onPause() {
         super.onResume();
 
+        SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        SynthJni.saveSettings(editor);
+        editor.commit();
         SynthJni.shutdown();
-    }
-
-    //TODO remove me
-    private void setControllerSettings() {
-        /**
-         * Oscillator
-         */
-        // OSC1
-        SynthJni.setOSC1Level(0.5f);
-        SynthJni.setOSC1WaveType(SynthJni.WAVE_TYPE_TRIANGLE);
-        SynthJni.setOSC1Octave(SynthJni.OCTAVE_SHIFT_1);
-
-        // 0SC2
-        SynthJni.setOSC2Level(0.3f);
-        SynthJni.setOSC2WaveType(SynthJni.WAVE_TYPE_REVERSE_SAWTOOTH);
-        SynthJni.setOSC2Octave(SynthJni.OCTAVE_SHIFT_2);
-
-        SynthJni.setGlideSamples(0);
-
-        /**
-         * Modulation
-         */
-        SynthJni.setModulationAmount(0.2f);
-        SynthJni.setModulationFrequency(0.3f);
-        SynthJni.setModulationSource(SynthJni.MODULATION_SOURCE_LFO_SRC_TRIANGLE);
-        SynthJni.setModulationDestination(SynthJni.MODULATION_DESTINATION_LFO_DEST_PITCH);
-
-        /**
-         *  Filter
-         */
-        SynthJni.setFilterCutoff(10000);
-        SynthJni.setFilterResonance(0);
-
-        /**
-         * Volume envelope
-         */
-        SynthJni.setAttackToVolumeEnvelope(0);
-        SynthJni.setDecayToVolumeEnvelope(0);
-        SynthJni.setSustainToVolumeEnvelope(1);
-        SynthJni.setReleaseToVolumeEnvelope(1);
-
-        /**
-         * Filter envelope
-         */
-        SynthJni.setAttackToFilterEnvelope(0);
-        SynthJni.setDecayToFilterEnvelope(0);
-        SynthJni.setSustainToFilterEnvelope(1);
-        SynthJni.setReleaseToFilterEnvelope(1);
-
-        /**
-         * Arpeggio
-         */
-        SynthJni.setArpeggioEnabled(false);
-        SynthJni.setArpeggioOctaves(3);
-        final float value = 0.5f;
-        final int kArpeggioMaxSamples = SynthJni.SAMPLE_RATE_HZ;  // 1 second
-        final int kArpeggioMinSamples = (int)(SynthJni.SAMPLE_RATE_HZ / 8.);  // 0.125 seconds
-        final int arpeggioSamples = (int)(value * (kArpeggioMinSamples - kArpeggioMaxSamples) + kArpeggioMaxSamples);
-        SynthJni.setArpeggioSamples(arpeggioSamples);
-        SynthJni.setArpeggioStep(SynthJni.STEP_UP_DOWN);
     }
 }

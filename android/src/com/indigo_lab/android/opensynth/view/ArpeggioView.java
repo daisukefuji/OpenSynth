@@ -101,7 +101,7 @@ public class ArpeggioView extends ControllerView
         }
     }
 
-    private static final float kSampleRate = 44100.0f;
+    private static final float kSampleRate = SynthJni.SAMPLE_RATE_HZ;
     private static final long kArpeggioMaxSamples = (long)kSampleRate;  // 1 second
     private static final long kArpeggioMinSamples = Math.round(kSampleRate / 8);  // 0.125 seconds
 
