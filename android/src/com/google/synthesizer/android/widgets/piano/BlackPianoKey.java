@@ -17,7 +17,6 @@
 package com.google.synthesizer.android.widgets.piano;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 
 import com.google.synthesizer.core.music.Note;
@@ -41,6 +40,7 @@ public class BlackPianoKey extends NotePianoKey {
    * @param drawingRect - the position of the piano itself.
    * @param octaves - the number of octaves visible on the piano keyboard.
    */
+  @Override
   public void layout(Rect drawingRect, int octaves) {
     int whiteKeyWidth = getWhiteKeyWidth(drawingRect, octaves);
     int blackKeyWidth = getBlackKeyWidth(drawingRect, octaves);
@@ -49,6 +49,22 @@ public class BlackPianoKey extends NotePianoKey {
     rect_.left = ((octaveOffset_ * WHITE_KEYS.length + key_ + 2) * whiteKeyWidth) -
         (blackKeyWidth/2);
     rect_.right = rect_.left + blackKeyWidth;
+
+    sideStartRect_.set(rect_);
+    shrinkRect(sideStartRect_, 4); 
+    sideStartRect_.bottom -= 5;
+    sideStartRect_.right -= 2;
+
+    topRect_.set(sideStartRect_);
+    shrinkRect(topRect_, 5); 
+    topRect_.top -= 1;
+
+    sideEndRect_.set(topRect_);
+    shrinkRect(sideEndRect_, -2);
+
+    gradientStartPoint_.set(0, 0); 
+    gradientEndPoint_.set(0, rect_.height() - 4); 
+    super.layout(drawingRect, octaves);
   }
 
   /**
@@ -56,20 +72,6 @@ public class BlackPianoKey extends NotePianoKey {
    */
   public double getLogFrequency() {
     return Note.computeLog12TET(BLACK_KEYS[key_], octaveOffset_ + piano_.getFirstOctave());
-  }
-
-  /**
-   * Draws the key in the current rect_.
-   */
-  public void draw(Canvas canvas) {
-    strokePaint_.setColor(Color.BLACK);
-    if (isPressed()) {
-      fillPaint_.setColor(Color.GREEN);
-    } else {
-      fillPaint_.setColor(Color.BLACK);
-    }
-    canvas.drawRect(rect_, fillPaint_);
-    canvas.drawRect(rect_, strokePaint_);
   }
 
   /**
@@ -92,4 +94,24 @@ public class BlackPianoKey extends NotePianoKey {
   protected static int getBlackKeyHeight(Rect drawingRect) {
     return getWhiteKeyHeight(drawingRect) / 2;
   }
+
+  @Override
+  protected int getSideStartColor() {
+    return KEY_SIDE_START_COLOR;
+  }
+
+  @Override
+  protected int getSideEndColor() {
+    return KEY_SIDE_END_COLOR;
+  }
+
+  @Override
+  protected int getTopColor() {
+    return KEY_TOP_COLOR;
+  }
+
+  private static final int KEY_SIDE_START_COLOR = 0x0d;
+  private static final int KEY_SIDE_END_COLOR = 0x69;
+  private static final int KEY_TOP_COLOR = 0x52;
+
 }

@@ -17,7 +17,6 @@
 package com.google.synthesizer.android.widgets.piano;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 
 import com.google.synthesizer.core.music.Note;
@@ -41,12 +40,28 @@ public class WhitePianoKey extends NotePianoKey {
    * @param drawingRect - the position of the piano itself.
    * @param octaves - the number of octaves visible on the piano keyboard.
    */
+  @Override
   public void layout(Rect drawingRect, int octaves) {
     int whiteKeyWidth = getWhiteKeyWidth(drawingRect, octaves);
     rect_.top = 0;
     rect_.bottom = getWhiteKeyHeight(drawingRect);
     rect_.left = ((octaveOffset_ * WHITE_KEYS.length + key_ + 1) * whiteKeyWidth);
     rect_.right = rect_.left + whiteKeyWidth;
+
+    sideStartRect_.set(rect_);
+    shrinkRect(sideStartRect_, 4); 
+    sideStartRect_.right -= 2;
+
+    topRect_.set(sideStartRect_);
+    shrinkRect(topRect_, 5); 
+    topRect_.top -= 1;
+
+    sideEndRect_.set(topRect_);
+    shrinkRect(sideEndRect_, -2);
+
+    gradientStartPoint_.set(1, 1); 
+    gradientEndPoint_.set(rect_.width() - 1, rect_.height() - 1); 
+    super.layout(drawingRect, octaves);
   }
 
   /**
@@ -56,17 +71,23 @@ public class WhitePianoKey extends NotePianoKey {
     return Note.computeLog12TET(WHITE_KEYS[key_], octaveOffset_ + piano_.getFirstOctave());
   }
 
-  /**
-   * Draws the key in the current rect_.
-   */
-  public void draw(Canvas canvas) {
-    strokePaint_.setColor(Color.BLACK);
-    if (isPressed()) {
-      fillPaint_.setColor(Color.GREEN);
-    } else {
-      fillPaint_.setColor(Color.WHITE);
-    }
-    canvas.drawRect(rect_, fillPaint_);
-    canvas.drawRect(rect_, strokePaint_);
+  @Override
+  protected int getSideStartColor() {
+    return KEY_SIDE_START_COLOR;
   }
+
+  @Override
+  protected int getSideEndColor() {
+    return KEY_SIDE_END_COLOR;
+  }
+
+  @Override
+  protected int getTopColor() {
+    return KEY_TOP_COLOR;
+  }
+
+  private static final int KEY_SIDE_START_COLOR = 0xc7;
+  private static final int KEY_SIDE_END_COLOR = 0xee;
+  private static final int KEY_TOP_COLOR = 0xfa;
+
 }

@@ -18,8 +18,13 @@ package com.google.synthesizer.android.widgets.piano;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader.TileMode;
 import android.util.Log;
 
 import com.google.synthesizer.core.music.Note;
@@ -39,11 +44,43 @@ public abstract class PianoKey {
     }
 
     // Set up some default objects for the key to draw itself with.
-    fillPaint_ = new Paint();
-    strokePaint_ = new Paint();
+    fillPaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
+    strokePaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
     fillPaint_.setStyle(Paint.Style.FILL);
     strokePaint_.setStyle(Paint.Style.STROKE);
     strokePaint_.setColor(Color.BLACK);
+
+    sideStartRect_ = new Rect();
+    topRect_ = new Rect();
+    sideEndRect_ = new Rect();
+
+    gradientStartPoint_ = new PointF();
+    gradientEndPoint_ = new PointF();
+
+    sideStartPaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
+    sideStartPaint_.setColor(Color.argb(0xff, getSideStartColor(), getSideStartColor(), getSideStartColor()));
+    sideStartPaint_.setStrokeJoin(Paint.Join.ROUND);
+    sideStartPaint_.setStrokeWidth(SIDE_START_STROKE_WIDTH);
+    sideStartPaint_.setStyle(Paint.Style.STROKE);
+    sideStartPaint_.setShadowLayer(4.0f, 0.0f, -3.0f, Color.BLACK);
+
+    sideEndPaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
+    sideEndPaint_.setColor(Color.argb(0xff, getSideEndColor(), getSideEndColor(), getSideEndColor()));
+    sideEndPaint_.setStrokeJoin(Paint.Join.ROUND);
+    sideEndPaint_.setStrokeWidth(SIDE_END_STROKE_WIDTH);
+    sideEndPaint_.setStyle(Paint.Style.STROKE);
+
+    topPaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
+    topPaint_.setColor(Color.argb(0xff, getTopColor(), getTopColor(), getTopColor()));
+    topPaint_.setStrokeJoin(Paint.Join.ROUND);
+    topPaint_.setStrokeWidth(TOP_STROKE_WIDTH);
+    topPaint_.setStyle(Paint.Style.FILL_AND_STROKE);
+
+    shaderPaint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    topPath_ = new Path();
+    sideStartPath_ = new Path();
+    sideEndPath_ = new Path();
   }
 
   /**
@@ -51,12 +88,35 @@ public abstract class PianoKey {
    * @param drawingRect - the position of the piano itself.
    * @param octaves - the number of octaves visible on the piano keyboard.
    */
-  abstract public void layout(Rect drawingRect, int octaves);
+  public void layout(Rect drawingRect, int octaves) {
+      sideStartPath_.reset();
+      sideStartPath_.addRect(new RectF(sideStartRect_), Path.Direction.CW);
+ 
+      sideEndPath_.reset();
+      sideEndPath_.addRect(new RectF(sideEndRect_), Path.Direction.CW);
+ 
+      topPath_.reset();
+      topPath_.addRect(new RectF(topRect_), Path.Direction.CW);
+
+      LinearGradient shader = new LinearGradient(
+              gradientStartPoint_.x, gradientStartPoint_.y,
+              gradientEndPoint_.x, gradientEndPoint_.y,
+              GRADIENT_COLOR0, GRADIENT_COLOR1, TileMode.CLAMP);
+      shaderPaint_.setShader(shader);
+  }
 
   /**
    * Draws the key in the current rect_.
    */
-  abstract public void draw(Canvas canvas);
+  public void draw(Canvas canvas) {
+    canvas.drawPath(topPath_, topPaint_);
+    canvas.drawPath(sideStartPath_, sideStartPaint_);
+    canvas.drawPath(sideEndPath_, sideEndPaint_);
+    if (isPressed()) {
+      // When the key is pressed, draw an extra alpha gradient on top.
+      canvas.drawRect(topRect_, shaderPaint_);
+    }
+  }
 
   /**
    * Called when the key's pressed_ state has changed.
@@ -156,6 +216,25 @@ public abstract class PianoKey {
     return drawingRect.height();
   }
 
+  protected int getSideStartColor() {
+    return 0;
+  }
+
+  protected int getSideEndColor() {
+    return 0;
+  }
+
+  protected int getTopColor() {
+    return 0;
+  }
+
+  protected void shrinkRect(Rect rect, int pixels) {
+      rect.left += pixels;
+      rect.top += pixels;
+      rect.right -= pixels;
+      rect.bottom -= pixels;
+  }
+
   // The piano this key is on.
   protected PianoView piano_;
 
@@ -169,9 +248,32 @@ public abstract class PianoKey {
   protected Paint fillPaint_;
   protected Paint strokePaint_;
 
+  protected Rect sideStartRect_;
+  protected Rect sideEndRect_;
+  protected Rect topRect_;
+
+  protected PointF gradientStartPoint_;
+  protected PointF gradientEndPoint_;
+
+  private Paint sideStartPaint_;
+  private Paint sideEndPaint_;
+  private Paint topPaint_;
+  private Paint shaderPaint_;
+
+  private Path sideStartPath_;
+  private Path sideEndPath_;
+  private Path topPath_;
+
   // Constants to map notes onto the keys.
   protected static final int WHITE_KEYS[] = {
       Note.C, Note.D, Note.E, Note.F, Note.G, Note.A, Note.B };
   protected static final int BLACK_KEYS[] = {
       Note.C_SHARP, Note.E_FLAT, Note.NONE, Note.F_SHARP, Note.A_FLAT, Note.B_FLAT, Note.NONE };
+
+  private static final float SIDE_START_STROKE_WIDTH = 8.0f;
+  private static final float SIDE_END_STROKE_WIDTH = 1.0f;
+  private static final float TOP_STROKE_WIDTH = 7.0f;
+
+  private static final int GRADIENT_COLOR0 = Color.argb(0xcc, 0x1a, 0x1a, 0x1a);
+  private static final int GRADIENT_COLOR1 = Color.argb(0x00, 0x1a, 0x1a, 0x1a);
 }

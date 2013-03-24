@@ -42,6 +42,7 @@ public class OctavePianoKey extends PianoKey {
    * @param drawingRect - the position of the piano itself.
    * @param octaves - the number of octaves visible on the piano keyboard.
    */
+  @Override
   public void layout(Rect drawingRect, int octaves) {
     int whiteKeyWidth = getWhiteKeyWidth(drawingRect, octaves);
     rect_.top = 0;
@@ -53,6 +54,7 @@ public class OctavePianoKey extends PianoKey {
       rect_.right = drawingRect.right;
       rect_.left = rect_.right - whiteKeyWidth;
     }
+    super.layout(drawingRect, octaves);
   }
 
   /**
@@ -69,26 +71,27 @@ public class OctavePianoKey extends PianoKey {
   public void draw(Canvas canvas) {
     strokePaint_.setColor(Color.BLACK);
     fillPaint_.setColor(Color.BLACK);
-    if (isPressed() && isValid()) {
-      fillPaint_.setColor(Color.GREEN);
-    }
     canvas.drawRect(rect_, fillPaint_);
     canvas.drawRect(rect_, strokePaint_);
 
     // Draw an arrow in the direction of the delta.
     if (isValid()) {
+      int margin = rect_.width() / 4;
+      int width = rect_.width() - (margin * 2);
+      int wOffset = width / 2;
+
       arrow_.reset();
       if (delta_ <= 0) {
-        arrow_.moveTo(rect_.left + 2, rect_.height() / 2);
-        arrow_.lineTo(rect_.right - 2, rect_.height() / 2 - 20);
-        arrow_.lineTo(rect_.right - 2, rect_.height() / 2 + 20);
+        arrow_.moveTo(rect_.left + margin, rect_.height() / 2);
+        arrow_.lineTo(rect_.right - margin, rect_.height() / 2 - wOffset);
+        arrow_.lineTo(rect_.right - margin, rect_.height() / 2 + wOffset);
       } else {
-        arrow_.moveTo(rect_.right - 2, rect_.height() / 2);
-        arrow_.lineTo(rect_.left + 2, rect_.height() / 2 - 20);
-        arrow_.lineTo(rect_.left + 2, rect_.height() / 2 + 20);
+        arrow_.moveTo(rect_.right - margin, rect_.height() / 2);
+        arrow_.lineTo(rect_.left + margin, rect_.height() / 2 - wOffset);
+        arrow_.lineTo(rect_.left + margin, rect_.height() / 2 + wOffset);
       }
       arrow_.close();
-      fillPaint_.setColor(Color.WHITE);
+      fillPaint_.setColor(isPressed() ? Color.GRAY : Color.WHITE);
       canvas.drawPath(arrow_, fillPaint_);
     }
   }
