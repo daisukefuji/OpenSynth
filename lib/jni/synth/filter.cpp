@@ -120,6 +120,12 @@ float ResonantFilter::GetValue(float x) {
   y3_ = y2_ * p + oldy2_ * p - k * y3_;
   y4_ = y3_ * p + oldy3_ * p - k * y4_;
   y4_ = y4_ - powf(y4_, 3.0f) / 6.0f;
+  if (isinf(y4_)) {
+    y1_ = 0;
+    y2_ = 0;
+    y3_ = 0;
+    y4_ = 0;
+  }
   oldx_ = out;
   oldy1_ = y1_;
   oldy2_ = y2_;
