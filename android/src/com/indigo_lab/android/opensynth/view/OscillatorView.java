@@ -25,7 +25,6 @@ public class OscillatorView extends ControllerView implements OnSeekBarChangeLis
             mOSCText = (TextView)v.findViewById(R.id.which_osc);
             mLevelSeekBar = (SeekBar)v.findViewById(R.id.level_seekbar);
             mLevelSeekBar.setMax(100);
-            mLevelSeekBar.setProgress(50);
             mLevelSeekBar.setOnSeekBarChangeListener(this);
             mWaveSelection = (RadioGroup)v.findViewById(R.id.osc_wave_selection);
             mWaveSelection.setOnCheckedChangeListener(this);
@@ -102,6 +101,63 @@ public class OscillatorView extends ControllerView implements OnSeekBarChangeLis
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
+
+        public void setProgress(float level) {
+            int progress = Math.round(level * 100);
+            assert progress >= 0 && progress <= 100;
+
+            mLevelSeekBar.setProgress(progress);
+        }
+
+        public void check(int whichId, int value) {
+            int checkedId = -1;
+
+            switch (whichId) {
+            case R.id.osc_wave_selection:
+            {
+                switch (value) {
+                case SynthJni.WAVE_TYPE_SQUARE:
+                    checkedId = R.id.radio_square_wave;
+                    break;
+                case SynthJni.WAVE_TYPE_TRIANGLE:
+                    checkedId = R.id.radio_triangle_wave;
+                    break;
+                case SynthJni.WAVE_TYPE_SAWTOOTH:
+                    checkedId = R.id.radio_sawtooth_wave;
+                    break;
+                case SynthJni.WAVE_TYPE_REVERSE_SAWTOOTH:
+                    checkedId = R.id.radio_reverse_sawtooth_wave;
+                    break;
+                }
+                assert checkedId != -1;
+                mWaveSelection.check(checkedId);
+                break;
+            }
+            case R.id.octave_selection:
+            {
+                switch (value) {
+                case SynthJni.OCTAVE_SHIFT_1:
+                    checkedId = R.id.radio_octave_1;
+                    break;
+                case SynthJni.OCTAVE_SHIFT_2:
+                    checkedId = R.id.radio_octave_2;
+                    break;
+                case SynthJni.OCTAVE_SHIFT_4:
+                    checkedId = R.id.radio_octave_4;
+                    break;
+                case SynthJni.OCTAVE_SHIFT_8:
+                    checkedId = R.id.radio_octave_8;
+                    break;
+                case SynthJni.OCTAVE_SHIFT_16:
+                    checkedId = R.id.radio_octave_16;
+                    break;
+                }
+                assert checkedId != -1;
+                mOctavetSelection.check(checkedId);
+                break;
+            }
+            }
+        }
     };
 
     private Group mLeft;
@@ -121,23 +177,32 @@ public class OscillatorView extends ControllerView implements OnSeekBarChangeLis
 
         mGlideRateSeekbar = (SeekBar)findViewById(R.id.glide_rate_seekbar);
         mGlideRateSeekbar.setMax(100);
-        mGlideRateSeekbar.setProgress(0);
+        setProgress(SynthJni.getGlideSamples());
         mGlideRateSeekbar.setOnSeekBarChangeListener(this);
 
         mLeft = new Group((LinearLayout)findViewById(R.id.osc1));
         mLeft.mOSCText.setText(mLeft.mOSCText.getText() + "1");
+        mLeft.setProgress(SynthJni.getOSC1Level());
+        mLeft.check(R.id.osc_wave_selection, SynthJni.getOSC1WaveType());
+        mLeft.check(R.id.octave_selection, SynthJni.getOSC1Octave());
 
         mRight = new Group((LinearLayout)findViewById(R.id.osc2));
         mRight.mOSCText.setText(mRight.mOSCText.getText() + "2");
+        mRight.setProgress(SynthJni.getOSC2Level());
+        mRight.check(R.id.osc_wave_selection, SynthJni.getOSC2WaveType());
+        mRight.check(R.id.octave_selection, SynthJni.getOSC2Octave());
     }
 
-    private final static int SAMPLE_RATE = 44100;
+    private void setProgress(long samples) {
+        int progress = Math.round(samples / (float)SynthJni.SAMPLE_RATE_HZ / 0.04f * 100f);
+        mGlideRateSeekbar.setProgress(progress);
+    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress,
             boolean fromUser) {
         float value = (progress / 100f) * 0.04f;
-        long samples = Math.round(SAMPLE_RATE * value);
+        long samples = Math.round(SynthJni.SAMPLE_RATE_HZ * value);
         SynthJni.setGlideSamples(samples);
     }
 
